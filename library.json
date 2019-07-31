@@ -1,0 +1,22 @@
+{
+  "name": "EspWifiSetup",
+  "keywords": "wifi, setup",
+  "description": "Library for setting up Wifi. If it cannot connect to the specified access point it creates an access point and a web page to set up wifi settings.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timothy3001/EspWiFiSetup"
+  },
+  "authors": [
+    {
+      "name": "Timo K",
+      "email": ""
+    }
+  ],
+  "dependencies": {
+    "name": "ESP Async WebServer",
+    "frameworks": "arduino"
+  },
+  "version": "0.0.1",
+  "frameworks": "arduino",
+  "platforms": ["esp32"]
+}

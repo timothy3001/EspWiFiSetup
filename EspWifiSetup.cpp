@@ -48,23 +48,23 @@ bool EspWifiSetup::readWifiSettings(char *&ssid, char *&password)
     return result;
 }
 
-void EspWifiSetup::setup()
+bool EspWifiSetup::setup()
 {
     String hostname = String("WiFiSetup");
-    setup(hostname, true, false);
+    return setup(hostname, true, false);
 }
 
-void EspWifiSetup::setup(String hostname)
+bool EspWifiSetup::setup(String hostname)
 {
-    setup(hostname, false, false);
+    return setup(hostname, false, false);
 }
 
-void EspWifiSetup::setup(String hostname, bool addMacSuffix)
+bool EspWifiSetup::setup(String hostname, bool addMacSuffix)
 {
-    setup(hostname, addMacSuffix, false);
+    return setup(hostname, addMacSuffix, false);
 }
 
-void EspWifiSetup::setup(String hostname, bool addMacSuffix, bool abortIfNotConnecting)
+bool EspWifiSetup::setup(String hostname, bool addMacSuffix, bool abortIfNotConnecting)
 {
     if (addMacSuffix)
     {

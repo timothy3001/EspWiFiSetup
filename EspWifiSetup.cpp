@@ -168,8 +168,8 @@ void EspWifiSetup::runWiFiConfigurationServer(String apName)
     String logMessage = String("Starting access point with name '") + apName + String("'...");
     logDebug(logMessage);
 
-    WiFi.mode(WIFI_AP);
     WiFi.disconnect();
+    WiFi.mode(WIFI_AP);
 
     IPAddress ip(192, 168, 0, 1);
     IPAddress nmask(255, 255, 255, 0);
@@ -193,6 +193,7 @@ void EspWifiSetup::runWiFiConfigurationServer(String apName)
     while (!doRestart)
     {
         dnsServer->processNextRequest();
+        yield();
     }
 
     logDebug("ESP about to restart...");
@@ -200,7 +201,7 @@ void EspWifiSetup::runWiFiConfigurationServer(String apName)
     while (tsWaitForRestart + 10000 > millis())
     {
         dnsServer->processNextRequest();
-        delay(1);
+        yield();
     }
 
     ESP.restart();

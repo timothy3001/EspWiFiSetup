@@ -51,15 +51,20 @@ bool EspWifiSetup::readWifiSettings(char *&ssid, char *&password)
 void EspWifiSetup::setup()
 {
     String hostname = String("WiFiSetup");
-    setup(hostname, true);
+    setup(hostname, true, false);
 }
 
 void EspWifiSetup::setup(String hostname)
 {
-    setup(hostname, false);
+    setup(hostname, false, false);
 }
 
 void EspWifiSetup::setup(String hostname, bool addMacSuffix)
+{
+    setup(hostname, addMacSuffix, false);
+}
+
+void EspWifiSetup::setup(String hostname, bool addMacSuffix, bool abortIfNotConnecting)
 {
     if (addMacSuffix)
     {
@@ -90,8 +95,16 @@ void EspWifiSetup::setup(String hostname, bool addMacSuffix)
 
         if (WiFi.status() != WL_CONNECTED)
         {
-            logDebug("Could not connect to configured access point, creating access point...");
-            runWiFiConfigurationServer(hostname);
+            logDebug("Could not connect to configured access point!");
+            if (!abortIfNotConnecting)
+            {
+                logDebug("Creating access point...");
+                runWiFiConfigurationServer(hostname);
+            }
+            else
+            {
+                result = false;
+            }
         }
         else
         {
@@ -106,6 +119,8 @@ void EspWifiSetup::setup(String hostname, bool addMacSuffix)
                 logDebug(String("mDNS setup successfully! Hostname: ") + String(hostname));
                 MDNS.addService("http", "tcp", 80);
             }
+
+            result = true;
         }
     }
     else
@@ -115,6 +130,8 @@ void EspWifiSetup::setup(String hostname, bool addMacSuffix)
 
     delete ssid;
     delete password;
+
+    return result;
 }
 
 void EspWifiSetup::resetSettings()

@@ -16,9 +16,10 @@
 class EspWifiSetup
 {
 public:
-    static void setup();
-    static void setup(String hostname);
-    static void setup(String hostname, bool addMacSuffix);
+    static bool setup();
+    static bool setup(String hostname);
+    static bool setup(String hostname, bool addMacSuffix);
+    static bool setup(String hostname, bool addMacSuffix, bool abortIfNotConnecting);
     static void resetSettings();
 
 private:

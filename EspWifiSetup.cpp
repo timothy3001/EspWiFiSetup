@@ -171,12 +171,13 @@ void EspWifiSetup::runWiFiConfigurationServer(String apName)
     WiFi.disconnect();
     WiFi.mode(WIFI_AP);
 
-    IPAddress ip(192, 168, 0, 1);
+    IPAddress ip(192, 168, 4, 1);
     IPAddress nmask(255, 255, 255, 0);
     WiFi.softAPConfig(ip, ip, nmask);
     WiFi.softAP(apName.c_str(), "");
 
-    logDebug("Access point created! Creating web server...");
+    logDebug(String("Access point created, gateway IP is ") + String(WiFi.softAPIP().toString()));
+    logDebug("Creating web server...");
 
     server = new AsyncWebServer(80);
     dnsServer = new DNSServer();

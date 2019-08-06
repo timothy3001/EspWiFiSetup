@@ -173,8 +173,8 @@ void EspWifiSetup::runWiFiConfigurationServer(String apName)
 
     IPAddress ip(192, 168, 4, 1);
     IPAddress nmask(255, 255, 255, 0);
-    WiFi.softAPConfig(ip, ip, nmask);
     WiFi.softAP(apName.c_str(), "");
+    WiFi.softAPConfig(ip, ip, nmask);
 
     logDebug(String("Access point created, gateway IP is ") + String(WiFi.softAPIP().toString()));
     logDebug("Creating web server...");

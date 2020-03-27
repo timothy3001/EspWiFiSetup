@@ -179,10 +179,11 @@ void EspWifiSetup::runWiFiConfigurationServer(String apName)
     logDebug(String("Access point created, gateway IP is ") + String(WiFi.softAPIP().toString()));
     logDebug("Creating web server...");
 
-    server = new AsyncWebServer(80);
+    server = new AsyncWebServer(80);    
+    delay(100);
     dnsServer = new DNSServer();
-
     dnsServer->start(53, "*", ip);
+    delay(100);
 
     server->on("/", HTTP_GET, [&](AsyncWebServerRequest *request) -> void { handleRoot(request); });
     server->on("/config", HTTP_POST, handlePostConfiguration);
@@ -190,6 +191,7 @@ void EspWifiSetup::runWiFiConfigurationServer(String apName)
     server->on("/error", HTTP_GET, handleError);
 
     server->begin();
+    delay(200);
 
     while (!doRestart)
     {
